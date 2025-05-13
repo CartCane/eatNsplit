@@ -45,7 +45,9 @@ export default function App(){
       friends.map(friend => 
         friend.id === selectedFriend.id 
         ? ({...friend, balance: friend.balance + value}) 
-        : friend)))
+        : friend)
+    ))
+    setSelectedFriend(null);
   }
 
   return(
@@ -134,6 +136,7 @@ function FormSplitBill({friend, onSplitBill}){
     e.preventDefault();
     if (!bill || !userBill) return;
     onSplitBill(whosPaying === "user" ? friendBill : -userBill)
+
   }
   return(
     <form className="form-split-bill" onSubmit={handleSubmit}>
