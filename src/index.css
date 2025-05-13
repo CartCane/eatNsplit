@@ -168,3 +168,35 @@ form h2 {
   letter-spacing: -0.5px;
   margin-bottom: 1.6rem;
 }
+
+@media (max-width: 768px){
+  html{
+    font-size: 55%;
+  }
+  body{
+    flex-direction: column;
+  }
+  .app{
+    grid-template-columns: 1fr;
+    row-gap: 2rem;
+    column-gap: 0;
+    min-height: auto;
+  }
+  .sidebar > .button{
+    float: none;
+    margin: 0 auto 1rem auto;
+    display: block;
+    width: 100%;
+  }
+  .sidebar ul{
+    gap: 0.6rem;
+  }
+  .sidebar li {
+    grid-template-columns: 4.8rem 1fr; /* Remove 3rd column on small screens */
+    grid-template-rows: auto auto auto;
+    row-gap: 0.4rem;
+  }
+  form h2 {
+    font-size: 1.8rem;
+  }
+}

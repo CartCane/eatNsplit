@@ -140,7 +140,7 @@ function FormSplitBill({friend, onSplitBill}){
       <h2>split a bill with {friend.name}</h2>
       <InputForm value={bill} onChange={(e)=>setBill(Number(e.target.value))}>💰 Bill Value</InputForm>
       <InputForm value={userBill} onChange={(e)=>setUserBill(Number(e.target.value) > bill ? userBill : Number(e.target.value))}>🕴 Your expense</InputForm>
-      <InputForm value={friendBill}>👫 {friend.name}'s expense</InputForm>
+      <InputForm value={friendBill} disabled={true}>👫 {friend.name}'s expense</InputForm>
       <label>🤑Who is paying the bill?</label>
       <select value={whosPaying} onChange={(e)=>setWhosPaying(e.target.value)}>
         <option value="user">You</option>
