@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 const initialFriends = [
   {
@@ -35,8 +35,8 @@ export default function App(){
     setFriends(friends => [...friends, friend]);
   }
 
-  function handleSelectedFriend(id){
-    setSelectedFriend(friends.find((friend) => friend.id === id));
+  function handleSelectedFriend(friend){
+    setSelectedFriend(prev => prev?.id === friend.id ? null : friend);
     setAddFriend(false);
   }
 
@@ -53,13 +53,12 @@ export default function App(){
   return(
     <div className="app">
       <div className="sidebar">
-        <FriendList list={friends} onSelected={handleSelectedFriend}/>
+        <FriendList list={friends} onSelected={handleSelectedFriend} selected={selectedFriend}/>
         {addFriend && <FormAddFriend onAddFriend={handleNewFriend} />}
         <Button onClick={handleAddFriend}>{addFriend ? "close" : "Add friend"}</Button>
       </div>
       {selectedFriend && <FormSplitBill friend={selectedFriend} onSplitBill={handleSplitBill}/>}
-    </div>
-  )
+    </div>)
 }
 
 function Button({children, onClick}){
@@ -103,15 +102,17 @@ function InputForm({children, type, disabled, value, onChange}){
   )
 }
 
-function FriendList({list, onSelected}){
+function FriendList({list, onSelected, selected}){
   return(
     <ul>
-      {list.map(friend => (<Friend key={friend.id} data={friend} onSelected={onSelected}/>))}
+      {list.map(friend => (<Friend key={friend.id} data={friend} selected={selected} onSelected={onSelected}/>))}
     </ul>
   )
 }
 
-function Friend({data, onSelected}){
+function Friend({data, onSelected, selected}){
+  const isSelected = selected?.id === data.id;
+
   return(
     <li>
       <img src={data.image} alt={data.name} />
@@ -121,7 +122,7 @@ function Friend({data, onSelected}){
       : data.balance > 0 
       ? <p className="green">{data.name} owes you {data.balance}</p> 
       : <p className='red'>You owe {data.name} ${Math.abs(data.balance)}</p>}
-      <Button onClick={()=>onSelected(data.id)}>Select</Button>
+      <Button onClick={()=>onSelected(data)}>{isSelected ? "close" : "Select"}</Button>
     </li>
   )
 }
